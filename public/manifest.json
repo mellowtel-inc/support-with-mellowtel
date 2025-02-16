@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Idle Support",
+  "version": "0.0.1",
+  "description": "Support your favorite extension / non-profit / creator through your unused bandwidth.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["storage", "declarativeNetRequestWithHostAccess"],
+  "web_accessible_resources": [
+    {
+      "resources": ["tabs/pascoli.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
