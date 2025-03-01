@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Idle Support",
+  "name": "Ambient Support",
   "version": "0.0.1",
   "description": "Support your favorite extension / non-profit / creator through your unused bandwidth.",
   "action": {
@@ -18,7 +18,7 @@
     }
   ],
   "host_permissions": ["<all_urls>"],
-  "permissions": ["storage", "declarativeNetRequestWithHostAccess"],
+  "permissions": ["storage", "declarativeNetRequestWithHostAccess", "cookies"],
   "web_accessible_resources": [
     {
       "resources": ["tabs/pascoli.html"],

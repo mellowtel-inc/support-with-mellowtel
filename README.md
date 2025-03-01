@@ -1,4 +1,4 @@
-# Support With Mellowtel
+# Ambient Support | Mellowtel
 
 Support your favorite extension / non-profit/ creator with Mellowtel's extension.
 

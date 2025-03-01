@@ -1,11 +1,13 @@
 import Mellowtel from "mellowtel";
 import { DISABLE_LOGS_MELLOWTEL } from "./constants";
+import { getConfigKey } from "./configuration/get_configuration_key";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const supportDeveloperToggle = document.getElementById(
     "supportDeveloperToggle",
   );
-  const mellowtel = new Mellowtel("54584498", {
+  const configKey = (await getConfigKey()).toString();
+  const mellowtel = new Mellowtel(configKey, {
     disableLogs: DISABLE_LOGS_MELLOWTEL,
   });
 
@@ -22,9 +24,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  document.getElementById("requestCounter").innerText = "";
-
-  // let settingsLink = await m.generateSettingsLink();
   document
     .getElementById("mellowtelOptOutSettings")
     .addEventListener("click", async () => {

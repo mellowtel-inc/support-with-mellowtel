@@ -1,6 +1,6 @@
 import Mellowtel from "mellowtel";
 import { DISABLE_LOGS_MELLOWTEL } from "./constants";
-import { getConfigKey } from "./get_configuration_key";
+import { getConfigKey } from "./configuration/get_configuration_key";
 
 (async () => {
   const configKey = (await getConfigKey()).toString();

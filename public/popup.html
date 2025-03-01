@@ -1,101 +1,308 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
-    <style>
-      .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <title>Ambient Support</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5fbf6;
+      margin: 0;
+      padding: 0;
+      min-width: 350px;
+      min-height: 400px;
+      overflow: hidden;
+      position: relative;
+    }
 
-      .switch input {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .title {
+      color: #2d5d34;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      color: #4caf50;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .animation-container {
+      position: absolute;
+      width: 100%;
+      height: 70%;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: float 15s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0);
         opacity: 0;
-        width: 0;
-        height: 0;
       }
+      50% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-100px) translateX(30px);
+        opacity: 0;
+      }
+    }
 
-      .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: 0.4s;
-      }
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 70%;
+      padding: 0 20px;
+    }
 
-      .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        transition: 0.4s;
-      }
+    .planting-container {
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
 
-      input:checked + .slider {
-        background-color: #4caf50;
-      }
+    .plant-graphic {
+      width: 180px;
+      height: 40px;
+      background: linear-gradient(to right, #8bc34a 50%, #a5d6a7 50%);
+      border-radius: 20px 20px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
 
-      input:focus + .slider {
-        box-shadow: 0 0 1px #4caf50;
-      }
+    .soil {
+      position: absolute;
+      width: 100%;
+      height: 15px;
+      background-color: #795548;
+      bottom: 0;
+      border-radius: 0 0 10px 10px;
+    }
 
-      input:checked + .slider:before {
-        transform: translateX(26px);
-      }
+    .message {
+      color: #388e3c;
+      font-size: 18px;
+      margin-top: 20px;
+      text-align: center;
+    }
 
-      .slider.round {
-        border-radius: 34px;
-      }
+    .button-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
 
-      .slider.round:before {
-        border-radius: 50%;
-      }
+    .stop-btn {
+      background-color: white;
+      color: #f44336;
+      border: 2px solid #f44336;
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
 
-      .disclaimer {
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        color: #333;
-        margin-top: 20px;
-        line-height: 1.5;
-        min-width: 300px;
-        width: 300px;
-      }
-    </style>
-  </head>
-  <body>
+    .stop-btn:hover {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      margin-right: 15px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+    }
+
+    input:checked + .slider {
+      background-color: #4caf50;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #4caf50;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .toggle-label {
+      color: #388e3c;
+      font-size: 16px;
+    }
+
+    .disclaimer {
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      margin-top: 15px;
+      max-width: 300px;
+      line-height: 1.4;
+    }
+
+    .settings-link {
+      color: #4caf50;
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: 15px;
+      display: inline-block;
+    }
+
+    .settings-link:hover {
+      text-decoration: underline;
+    }
+
+    #requestCounter {
+      font-size: 12px;
+      color: #999;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="animation-container">
+  <!-- Particles will be added by JavaScript -->
+</div>
+
+<div class="header">
+  <div class="title">Ambient Support</div>
+</div>
+
+<div class="content">
+  <div class="planting-container">
+    <div class="plant-graphic">
+      <div class="soil"></div>
+    </div>
+    <div class="message">Supporting the network while you browse...</div>
+  </div>
+
+  <div class="toggle-container">
     <label class="switch">
       <input type="checkbox" id="supportDeveloperToggle" />
       <span class="slider round"></span>
     </label>
+    <span class="toggle-label">Enable Ambient Support</span>
+  </div>
 
-    <div class="disclaimer">
-      <p>
-        If you choose to ‘Accept all’, we will also use the Mellowtel API to:
-        Enable trusted partners to access internet resources by also routing
-        part of their traffic through your node in the network
-      </p>
-      <p>
-        If you choose “Decline optional use”, we will not use the additional
-        purposes indicated. The service is used by trusted partners without
-        affecting the speed or quality of your browsing. You can choose not to
-        participate at any time from this page. By accepting full use, you help
-        us keep the service free and available.
-      </p>
-    </div>
 
-    <div id="requestCounter">Request Count: 0</div>
+  <a href="#" id="mellowtelOptOutSettings" class="settings-link">Manage Ambient Support Settings</a>
+</div>
 
-    <a href="#" id="mellowtelOptOutSettings" style="margin-top: 10px"
-      >Manage Mellowtel Settings</a
-    >
-    <script src="/popup.js"></script>
-  </body>
+<div class="button-container">
+  <button class="stop-btn" id="stopSupportBtn">Stop Supporting</button>
+</div>
+
+<script>
+  // Create floating particles for ambient animation
+  function createParticles() {
+    const container = document.querySelector('.animation-container');
+    const colors = ['#a5d6a7', '#81c784', '#66bb6a', '#c5e1a5', '#e6ee9c'];
+
+    for (let i = 0; i < 15; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+
+      // Random properties
+      const size = Math.floor(Math.random() * 20) + 5;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const left = Math.floor(Math.random() * 100);
+      const top = Math.floor(Math.random() * 100);
+      const delay = Math.random() * 10;
+      const duration = Math.random() * 10 + 10;
+
+      // Apply styles
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.backgroundColor = color;
+      particle.style.left = `${left}%`;
+      particle.style.top = `${top}%`;
+      particle.style.animationDelay = `${delay}s`;
+      particle.style.animationDuration = `${duration}s`;
+
+      container.appendChild(particle);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    createParticles();
+
+    // Connect stop button to toggle
+    document.getElementById('stopSupportBtn').addEventListener('click', function() {
+      const toggle = document.getElementById('supportDeveloperToggle');
+      toggle.checked = false;
+      toggle.dispatchEvent(new Event('change'));
+    });
+  });
+</script>
+<script src="/popup.js"></script>
+</body>
 </html>
