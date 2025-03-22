@@ -6,6 +6,7 @@ import {
 import { getLocalStorage, setLocalStorage } from "../storage/storage-helpers";
 import { isInSW } from "../helpers/helpers";
 import { sendMessageToBackground } from "../messaging/msg-helpers";
+import { Logger } from "../logger/logger";
 
 /**
  * Gets the configuration key from Chrome storage, cookies, or Lambda, falling back to default
@@ -14,22 +15,26 @@ import { sendMessageToBackground } from "../messaging/msg-helpers";
 export function getConfigKey() {
   return new Promise(async (resolve) => {
     try {
+      resolve(DEFAULT_CONFIG_KEY);
       // Try Chrome storage first
       const storedConfig = await getLocalStorage(
         KEY_SUPPORTED_USER_CONFIG,
         true,
       );
       if (storedConfig && storedConfig.configuration_key) {
+        Logger.log("[getConfigKey] : storedConfig", storedConfig);
         resolve(storedConfig.configuration_key);
-        return;
       }
 
       // Check if we're in a service worker (background) context
       if (await isInSW()) {
+        Logger.log("[getConfigKey] : in SW");
         // Direct execution - we have access to the cookies API
         const redirectKey = await getRedirectKeyFromCookies();
+        Logger.log("[getConfigKey] : redirectKey", redirectKey);
         if (redirectKey) {
           const configData = await fetchConfigFromLambda(redirectKey);
+          Logger.log("[getConfigKey] : configData", configData);
           if (configData && configData.configuration_key) {
             const dataToStore = {
               configuration_key: configData.configuration_key,
@@ -38,20 +43,24 @@ export function getConfigKey() {
               name: configData.name || null,
             };
             await setLocalStorage(KEY_SUPPORTED_USER_CONFIG, dataToStore);
+            Logger.log("[getConfigKey] : stored config", dataToStore);
             return configData.configuration_key;
           }
         }
       } else {
+        Logger.log("[getConfigKey] : not in SW");
         // Not in service worker - need to send message to background
         try {
+          Logger.log("[getConfigKey] : sending message to background");
           const response = await sendMessageToBackground({
             action: "getConfigKey",
           });
+          Logger.log("[getConfigKey] : response", response);
           if (response && response.configKey) {
             return response.configKey;
           }
         } catch (err) {
-          console.error("Error communicating with background script:", err);
+          Logger.error("Error communicating with background script:", err);
           // Fall through to default
         }
       }
@@ -59,9 +68,16 @@ export function getConfigKey() {
       // Fall back to default
       resolve(DEFAULT_CONFIG_KEY);
     } catch (error) {
-      console.error("Error getting config key:", error);
+      Logger.error("Error getting config key:", error);
       resolve(DEFAULT_CONFIG_KEY);
     }
+  });
+}
+
+export function getConfigData() {
+  return new Promise(async (resolve) => {
+    const storedConfig = await getLocalStorage(KEY_SUPPORTED_USER_CONFIG, true);
+    resolve(storedConfig);
   });
 }
 
@@ -78,7 +94,7 @@ function getRedirectKeyFromCookies() {
       },
       (cookie) => {
         if (chrome.runtime.lastError) {
-          console.error("Error reading cookie:", chrome.runtime.lastError);
+          Logger.error("Error reading cookie:", chrome.runtime.lastError);
           resolve(null);
           return;
         }
@@ -107,7 +123,7 @@ async function fetchConfigFromLambda(redirectKey) {
     const data = await response.json();
     return data && data.configuration_key ? data : null;
   } catch (error) {
-    console.error("Error fetching from Lambda:", error);
+    Logger.error("Error fetching from Lambda:", error);
     return null;
   }
 }

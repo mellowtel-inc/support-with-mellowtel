@@ -1,3 +1,5 @@
+import { DISABLE_LOGS_EXTENSION } from "../constants";
+
 /**
  * Logger utility class with controllable log output
  */
@@ -5,7 +7,7 @@ export class Logger {
   /**
    * @type {boolean}
    */
-  static disableLogs = true;
+  static disableLogs = DISABLE_LOGS_EXTENSION;
 
   /**
    * Log info level messages

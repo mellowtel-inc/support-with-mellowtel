@@ -1,244 +1,248 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Ambient Support</title>
-  <style>
-    body {
-      font-family: "Arial", sans-serif;
-      background-color: #f5fbf6;
-      margin: 0;
-      padding: 0;
-      min-width: 350px;
-      min-height: 400px;
-      overflow: hidden;
-      position: relative;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ambient Support</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f5fbf6;
+        margin: 0;
+        padding: 0;
+        min-width: 350px;
+        min-height: 400px;
+        overflow: hidden;
+        position: relative;
+      }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-    }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+      }
 
-    .title {
-      color: #2d5d34;
-      font-size: 24px;
-      font-weight: bold;
-    }
+      .title {
+        color: #2d5d34;
+        font-size: 24px;
+        font-weight: bold;
+      }
 
-    .animation-container {
-      position: absolute;
-      width: 100%;
-      height: 70%;
-      z-index: 0;
-    }
+      .animation-container {
+        position: absolute;
+        width: 100%;
+        height: 70%;
+        z-index: 0;
+      }
 
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.5;
-      animation: float 15s infinite ease-in-out;
-    }
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.5;
+        animation: float 15s infinite ease-in-out;
+      }
 
-    @keyframes float {
-      0% {
-        transform: translateY(0) translateX(0);
+      @keyframes float {
+        0% {
+          transform: translateY(0) translateX(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(-100px) translateX(30px);
+          opacity: 0;
+        }
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 70%;
+        padding: 0 20px 30px 20px;
+      }
+
+      .planting-container {
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 20px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        width: 85%;
+        transition: all 0.3s ease;
+      }
+
+      .plant-graphic {
+        width: 200px;
+        height: 50px;
+        background: linear-gradient(to right, #8bc34a 50%, #a5d6a7 50%);
+        border-radius: 25px 25px 0 0;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s ease;
+      }
+
+      .plant-graphic.inactive {
+        background: linear-gradient(to right, #bdbdbd 50%, #e0e0e0 50%);
+      }
+
+      .soil {
+        position: absolute;
+        width: 100%;
+        height: 18px;
+        background-color: #795548;
+        bottom: 0;
+        border-radius: 0 0 10px 10px;
+      }
+
+      .message {
+        color: #388e3c;
+        font-size: 20px;
+        margin-top: 25px;
+        text-align: center;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .message.inactive {
+        color: #757575;
+      }
+
+      .toggle-container {
+        display: flex;
+        align-items: center;
+        margin: 30px 0;
+      }
+
+      .toggle-label {
+        color: #388e3c;
+        font-size: 18px;
+        transition: color 0.3s ease;
+      }
+
+      .toggle-label.inactive {
+        color: #757575;
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        margin-right: 15px;
+      }
+
+      .switch input {
         opacity: 0;
+        width: 0;
+        height: 0;
       }
-      50% {
-        opacity: 0.7;
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
       }
-      100% {
-        transform: translateY(-100px) translateX(30px);
-        opacity: 0;
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
       }
-    }
 
-    .content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 70%;
-      padding: 0 20px 30px 20px;
-    }
+      input:checked + .slider {
+        background-color: #4caf50;
+      }
 
-    .planting-container {
-      background-color: rgba(255, 255, 255, 0.7);
-      border-radius: 20px;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      width: 85%;
-      transition: all 0.3s ease;
-    }
+      input:focus + .slider {
+        box-shadow: 0 0 1px #4caf50;
+      }
 
-    .plant-graphic {
-      width: 200px;
-      height: 50px;
-      background: linear-gradient(to right, #8bc34a 50%, #a5d6a7 50%);
-      border-radius: 25px 25px 0 0;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.5s ease;
-    }
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
 
-    .plant-graphic.inactive {
-      background: linear-gradient(to right, #bdbdbd 50%, #e0e0e0 50%);
-    }
+      .slider.round {
+        border-radius: 34px;
+      }
 
-    .soil {
-      position: absolute;
-      width: 100%;
-      height: 18px;
-      background-color: #795548;
-      bottom: 0;
-      border-radius: 0 0 10px 10px;
-    }
+      .slider.round:before {
+        border-radius: 50%;
+      }
 
-    .message {
-      color: #388e3c;
-      font-size: 20px;
-      margin-top: 25px;
-      text-align: center;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
+      .settings-link {
+        color: #4caf50;
+        text-decoration: none;
+        font-size: 16px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        display: inline-block;
+        transition: all 0.3s ease;
+      }
 
-    .message.inactive {
-      color: #757575;
-    }
+      .settings-link:hover {
+        text-decoration: underline;
+        color: #2d5d34;
+      }
 
-    .toggle-container {
-      display: flex;
-      align-items: center;
-      margin: 30px 0;
-    }
-
-    .toggle-label {
-      color: #388e3c;
-      font-size: 18px;
-      transition: color 0.3s ease;
-    }
-
-    .toggle-label.inactive {
-      color: #757575;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-      margin-right: 15px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: 0.4s;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: 0.4s;
-    }
-
-    input:checked + .slider {
-      background-color: #4caf50;
-    }
-
-    input:focus + .slider {
-      box-shadow: 0 0 1px #4caf50;
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
-
-    .slider.round {
-      border-radius: 34px;
-    }
-
-    .slider.round:before {
-      border-radius: 50%;
-    }
-
-    .settings-link {
-      color: #4caf50;
-      text-decoration: none;
-      font-size: 16px;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      display: inline-block;
-      transition: all 0.3s ease;
-    }
-
-    .settings-link:hover {
-      text-decoration: underline;
-      color: #2d5d34;
-    }
-
-    /* Add some floating particles in the background */
-    .bg-particle {
-      position: absolute;
-      background-color: rgba(76, 175, 80, 0.1);
-      border-radius: 50%;
-    }
-  </style>
-</head>
-<body>
-<div class="animation-container" id="animationContainer">
-  <!-- Particles will be added by JavaScript -->
-</div>
-
-<div class="header">
-  <div class="title">Ambient Support</div>
-</div>
-
-<div class="content">
-  <div class="planting-container" id="plantingContainer">
-    <div class="plant-graphic" id="plantGraphic">
-      <div class="soil"></div>
+      /* Add some floating particles in the background */
+      .bg-particle {
+        position: absolute;
+        background-color: rgba(76, 175, 80, 0.1);
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="animation-container" id="animationContainer">
+      <!-- Particles will be added by JavaScript -->
     </div>
-    <div class="message" id="supportMessage">Thanks for your support</div>
-  </div>
 
-  <div class="toggle-container">
-    <label class="switch">
-      <input type="checkbox" id="supportDeveloperToggle" checked />
-      <span class="slider round"></span>
-    </label>
-    <span class="toggle-label" id="toggleLabel">Enable Ambient Support</span>
-  </div>
+    <div class="header">
+      <div class="title">Ambient Support</div>
+    </div>
 
-  <a href="#" id="mellowtelOptOutSettings" class="settings-link">Manage Ambient Support Settings</a>
-</div>
+    <div class="content">
+      <div class="planting-container" id="plantingContainer">
+        <div class="plant-graphic" id="plantGraphic">
+          <div class="soil"></div>
+        </div>
+        <div class="message" id="supportMessage">Thanks for your support</div>
+      </div>
 
-<script src="popup.js"></script>
-</body>
+      <div class="toggle-container">
+        <label class="switch">
+          <input type="checkbox" id="supportDeveloperToggle" checked />
+          <span class="slider round"></span>
+        </label>
+        <span class="toggle-label" id="toggleLabel"
+          >Enable Ambient Support</span
+        >
+      </div>
+
+      <a href="#" id="mellowtelOptOutSettings" class="settings-link"
+        >Manage Ambient Support Settings</a
+      >
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
 </html>
