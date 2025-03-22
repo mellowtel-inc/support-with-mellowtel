@@ -5,6 +5,7 @@ import { DEFAULT_CONFIG_KEY } from "./configuration/constants";
 
 let mellowtel;
 
+
 (async () => {
   const configKey = (await getConfigKey()).toString();
   mellowtel = new Mellowtel(configKey, {

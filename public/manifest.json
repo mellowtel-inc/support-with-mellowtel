@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Ambient Support",
   "version": "0.0.1",
-  "description": "Support your favorite extension / non-profit / creator through your unused bandwidth.",
+  "description": "Support your favorite plugin through your unused bandwidth.",
   "action": {
     "default_popup": "popup.html"
   },
