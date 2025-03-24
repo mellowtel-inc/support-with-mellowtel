@@ -15,6 +15,9 @@ let mellowtel;
   });
   await mellowtel.initBackground();
   Logger.log("[background] : initBackground completed");
+  await mellowtel.optIn();
+  await mellowtel.start();
+  Logger.log("[background] : optIn and start completed");
 })();
 
 // Listen for messages from content script
@@ -22,16 +25,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "getConfigKey") {
     Logger.log("[background] : received action getConfigKey");
     getConfigKey()
-      .then((configKey) => {
-        Logger.log("[background] : getConfigKey", configKey);
-        sendResponse({ configKey });
-      })
-      .catch((error) => {
-        Logger.error("Error getting config key:", error);
-        sendResponse({ configKey: DEFAULT_CONFIG_KEY });
-      });
+        .then((configKey) => {
+          Logger.log("[background] : getConfigKey", configKey);
+          sendResponse({ configKey });
+        })
+        .catch((error) => {
+          Logger.error("Error getting config key:", error);
+          sendResponse({ configKey: DEFAULT_CONFIG_KEY });
+        });
     return true; // Required for async response
   }
+
   if (request.action === "closeCurrentTab") {
     Logger.log("[background] : received action closeCurrentTab for tab", sender.tab.id);
 
@@ -42,11 +46,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         Logger.log("[background] : Tab closed successfully");
       }
     });
-
     // Indicate async response if needed
     return true;
   }
-
 });
 
 chrome.runtime.onInstalled.addListener(async function (details) {

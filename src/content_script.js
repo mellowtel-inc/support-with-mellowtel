@@ -6,6 +6,7 @@ import { Logger } from "./logger/logger";
 (async () => {
   Logger.log("[content_script] : starting");
   const configKey = (await getConfigKey()).toString();
+
   Logger.log("[content_script] : configKey retrieved", configKey);
   const mellowtel = new Mellowtel(configKey, {
     disableLogs: DISABLE_LOGS_MELLOWTEL,
@@ -16,10 +17,6 @@ import { Logger } from "./logger/logger";
 
   if (window.location.href.includes("mellowtel.com/") || window.location.href.includes("localhost:8080")) {
     Logger.log("[content_script] : on mellowtel.com/");
-    await mellowtel.optIn();
-    Logger.log("[background] : optIn completed");
-    await mellowtel.start();
-    Logger.log("[background] : start completed");
 
     // Wait for DOM to be fully loaded
     const waitForElement = (selector) => {
