@@ -33,16 +33,27 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true; // Required for async response
   }
   if (request.action === "closeCurrentTab") {
-    Logger.log("[background] : received action closeCurrentTab");
-    chrome.tabs.remove(sender.tab.id);
+    Logger.log("[background] : received action closeCurrentTab for tab", sender.tab.id);
+
+    chrome.tabs.remove(sender.tab.id, () => {
+      if (chrome.runtime.lastError) {
+        Logger.error("[background] : Error closing tab:", chrome.runtime.lastError);
+      } else {
+        Logger.log("[background] : Tab closed successfully");
+      }
+    });
+
+    // Indicate async response if needed
+    return true;
   }
+
 });
 
 chrome.runtime.onInstalled.addListener(async function (details) {
   Logger.log("[background] : Extension Installed or Updated");
   if (details.reason === "install") {
     chrome.tabs.create({
-      url: "https://mellowtel.com/demo-ambient-support/",
+      url: "http://localhost:8080/demo-ambient-support/",
     });
   }
 });

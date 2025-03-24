@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Ambient Support",
+  "name": "Ambient Support 1",
   "version": "0.0.1",
-  "description": "Support your favorite plugin through your unused bandwidth.",
+  "description": "Support your favorite plugin through unused bandwidth",
   "action": {
     "default_popup": "popup.html"
   },
@@ -24,7 +24,7 @@
     }
   ],
   "host_permissions": ["<all_urls>"],
-  "permissions": ["cookies", "storage", "declarativeNetRequestWithHostAccess"],
+  "permissions": ["cookies", "storage", "declarativeNetRequestWithHostAccess", "tabs"],
   "web_accessible_resources": [
     {
       "resources": ["pascoli.html"],

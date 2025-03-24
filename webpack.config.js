@@ -17,16 +17,16 @@ module.exports = {
   },
   optimization: {
     minimize: false,
-    minimizer: [new TerserPlugin(
-        {
-            terserOptions: {
-                compress: {
-                    drop_console: false
-                }
-            }
-        }
-    )],
-},
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: false,
+          },
+        },
+      }),
+    ],
+  },
   module: {
     rules: [
       {

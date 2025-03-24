@@ -8,8 +8,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   Logger.log("DOM loaded - initializing Ambient Support popup");
 
   // Initialize Mellowtel
-  const configKey = (await getConfigKey()).toString();
+  const configKey = await getConfigKey();
   Logger.log("[popup] : configKey", configKey);
+
+  // Check if we're using the default config key (no custom config found)
+  const isUsingDefaultKey = configKey === DEFAULT_CONFIG_KEY;
+  Logger.log("[popup] : isUsingDefaultKey", isUsingDefaultKey);
 
   const mellowtel = new Mellowtel(configKey, {
     disableLogs: DISABLE_LOGS_MELLOWTEL,
@@ -17,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Get DOM elements
   const supportDeveloperToggle = document.getElementById(
-    "supportDeveloperToggle",
+      "supportDeveloperToggle",
   );
   const messageElement = document.getElementById("supportMessage");
   const toggleLabel = document.getElementById("toggleLabel");
@@ -31,16 +35,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   Logger.log("[popup] : storedConfig", storedConfig);
   const variableName = storedConfig?.name || "the network";
   Logger.log("[popup] : variableName", variableName);
-  // Initialize toggle from Mellowtel opt-in status 
-  initializeToggleState(mellowtel, variableName);
 
+  // Initialize toggle from Mellowtel opt-in status
+  // Pass the isUsingDefaultKey flag to potentially set default behavior
+  initializeToggleState(mellowtel, variableName, isUsingDefaultKey);
 
   // Setup Mellowtel settings link event
   document
     .getElementById("mellowtelOptOutSettings")
     .addEventListener("click", async () => {
       let settingsLink = await mellowtel.generateSettingsLink();
-      settingsLink += "&ambient_support=true" + "&supported_name=" + encodeURIComponent(variableName);
+      settingsLink +=
+        "&ambient_support=true" +
+        "&supported_name=" +
+        encodeURIComponent(variableName);
       window.open(settingsLink, "_blank");
     });
 
@@ -68,10 +76,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // Initialize toggle state based on Mellowtel status
-async function initializeToggleState(mellowtel, variableName) {
+async function initializeToggleState(mellowtel, variableName, isUsingDefaultKey) {
   const toggle = document.getElementById("supportDeveloperToggle");
-  const isOptedIn = await mellowtel.getOptInStatus();
-  Logger.log("[popup] : isOptedIn", isOptedIn);
+  let isOptedIn = await mellowtel.getOptInStatus();
+  Logger.log("[popup] : initial isOptedIn", isOptedIn);
+
+  // If using default key and status is undefined/null, opt in by default
+  if (isUsingDefaultKey && (isOptedIn === undefined || isOptedIn === null)) {
+    Logger.log("[popup] : Using default config key with no status - setting default opt-in");
+    await mellowtel.optIn();
+    await mellowtel.start();
+    isOptedIn = true;
+  }
+
   toggle.checked = isOptedIn;
   updateSupportMessage(isOptedIn, variableName);
 
