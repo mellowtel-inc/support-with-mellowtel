@@ -16,12 +16,12 @@ module.exports = {
     publicPath: "",
   },
   optimization: {
-    minimize: false,
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         terserOptions: {
           compress: {
-            drop_console: false,
+            drop_console: false, // Change to true to disable console logs
           },
         },
       }),
