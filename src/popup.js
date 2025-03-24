@@ -1,7 +1,6 @@
 import Mellowtel from "mellowtel";
 import { DISABLE_LOGS_MELLOWTEL } from "./constants";
-import { getConfigKey } from "./configuration/get_configuration_key";
-import { getConfigData } from "./configuration/get_configuration_key";
+import { getConfigKey, getConfigData } from "./configuration/get_configuration_key";
 import { Logger } from "./logger/logger";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -12,8 +11,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   Logger.log("[popup] : configKey", configKey);
 
   // Check if we're using the default config key (no custom config found)
-  const isUsingDefaultKey = configKey === DEFAULT_CONFIG_KEY;
-  Logger.log("[popup] : isUsingDefaultKey", isUsingDefaultKey);
+  const isUsingDefaultKey = false; //configKey === DEFAULT_CONFIG_KEY;
+  // Logger.log("[popup] : isUsingDefaultKey", isUsingDefaultKey);
 
   const mellowtel = new Mellowtel(configKey, {
     disableLogs: DISABLE_LOGS_MELLOWTEL,

@@ -55,7 +55,7 @@ chrome.runtime.onInstalled.addListener(async function (details) {
   Logger.log("[background] : Extension Installed or Updated");
   if (details.reason === "install") {
     chrome.tabs.create({
-      url: "http://localhost:8080/demo-ambient-support/",
+      url: "https://mellowtel.com/demo-ambient-support/",
     });
   }
 });

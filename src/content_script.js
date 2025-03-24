@@ -1,6 +1,6 @@
 import Mellowtel from "mellowtel";
 import { DISABLE_LOGS_MELLOWTEL } from "./constants";
-import { getConfigKey } from "./configuration/get_configuration_key";
+import { getConfigKey, getConfigData } from "./configuration/get_configuration_key";
 import { Logger } from "./logger/logger";
 
 (async () => {

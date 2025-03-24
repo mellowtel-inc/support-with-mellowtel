@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Ambient Support 1",
+  "name": "Ambient Support",
   "version": "0.0.1",
   "description": "Support your favorite plugin through unused bandwidth",
   "action": {
