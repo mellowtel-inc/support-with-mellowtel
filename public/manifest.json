@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Ambient Support",
+  "name": "Support with Mellowtel",
   "version": "0.0.1",
-  "description": "Support your favorite plugin through unused bandwidth",
+  "description": "Support your favorite plugin with Mellowtel",
   "action": {
     "default_popup": "popup.html"
   },
