@@ -21,7 +21,7 @@ module.exports = {
       new TerserPlugin({
         terserOptions: {
           compress: {
-            drop_console: false, // Change to true to disable console logs
+            drop_console: true //false, Change to true to disable console logs
           },
         },
       }),
