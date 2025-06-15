@@ -1,8 +1,13 @@
-# Ambient Support | Mellowtel
+# Support with Mellowtel | Mellowtel
 
-Support your favorite browser plugin / non-profit or creator with Mellowtel's extension.
+Support your favorite browser plugin developer with Mellowtel's extension.
 
 Download the plugin from their link and start supporting for free
+
+# Download
+
+You can download the extension from the following [link](https://chromewebstore.google.com/detail/support-with-mellowtel/jngbedjpioeongcicaomeideeompcbcc).
+If a developer has shared their link, please use that one so you can correctly support them.
 
 # Development
 
