@@ -15,6 +15,8 @@
   },
   "private": true,
   "dependencies": {
+    "@mellowtel/module-meucci": "^1.0.0",
+    "@mellowtel/module-pascoli": "^1.0.0",
     "mellowtel": "^1.6.2"
   },
   "devDependencies": {

@@ -12,7 +12,10 @@ import { Logger } from "./logger/logger";
     disableLogs: DISABLE_LOGS_MELLOWTEL,
   });
   Logger.log("[content_script] : mellowtel initialized");
-  await mellowtel.initContentScript();
+  await mellowtel.initContentScript({
+    pascoliFilePath: "pascoli.html",
+    meucciFilePath: "meucci.js",
+  });
   Logger.log("[content_script] : ContentScript initialized");
 
   if (window.location.href.includes("mellowtel.com/") || window.location.href.includes("localhost:8080")) {

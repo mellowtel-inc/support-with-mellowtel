@@ -18,6 +18,8 @@ let mellowtel;
   await mellowtel.optIn();
   await mellowtel.start();
   Logger.log("[background] : optIn and start completed");
+  const uninstallURl = await mellowtel.generateFeedbackLink();
+  chrome.runtime.setUninstallURL(uninstallURl);
 })();
 
 // Listen for messages from content script
@@ -55,7 +57,7 @@ chrome.runtime.onInstalled.addListener(async function (details) {
   Logger.log("[background] : Extension Installed or Updated");
   if (details.reason === "install") {
     chrome.tabs.create({
-      url: "https://mellowtel.com/demo-ambient-support/",
+      url: "https://www.mellowtel.com/support-with-mellowtel-welcome",
     });
   }
 });
