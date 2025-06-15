@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const plantGraphic = document.getElementById("plantGraphic");
 
   // Create background particles
-  createBackgroundParticles();
+  // createBackgroundParticles();
 
   // Try to get the variable name (default to "the network" if not found)
   const storedConfig = await getConfigData();
@@ -102,7 +102,7 @@ function updateSupportMessage(isSupporting, variableName) {
   const plantGraphic = document.getElementById("plantGraphic");
 
   if (isSupporting) {
-    messageElement.textContent = `Supporting ${variableName} while you browse...`;
+    messageElement.textContent = `Supporting ${variableName} while you browse`;
     messageElement.classList.remove("inactive");
     toggleLabel.textContent = "Thanks for the support";
     toggleLabel.classList.remove("inactive");

@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Ambient Support</title>
+    <title>Support with Mellowtel</title>
     <style>
       body {
         font-family: "Arial", sans-serif;
-        background-color: #f5fbf6;
+        background: linear-gradient(135deg, #f8faff 0%, #e8f2ff 100%);
         margin: 0;
         padding: 0;
         min-width: 350px;
@@ -23,7 +23,7 @@
       }
 
       .title {
-        color: #2d5d34;
+        color: #2B5AFF;
         font-size: 24px;
         font-weight: bold;
       }
@@ -38,7 +38,7 @@
       .particle {
         position: absolute;
         border-radius: 50%;
-        opacity: 0.5;
+        opacity: 0.3;
         animation: float 15s infinite ease-in-out;
       }
 
@@ -48,7 +48,7 @@
           opacity: 0;
         }
         50% {
-          opacity: 0.7;
+          opacity: 0.6;
         }
         100% {
           transform: translateY(-100px) translateX(30px);
@@ -67,46 +67,87 @@
         padding: 0 20px 30px 20px;
       }
 
-      .planting-container {
-        background-color: rgba(255, 255, 255, 0.7);
+      .support-container {
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 20px;
         padding: 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-top: 20px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 8px 32px rgba(43, 90, 255, 0.15);
         width: 85%;
         transition: all 0.3s ease;
+        border: 1px solid rgba(43, 90, 255, 0.1);
       }
 
-      .plant-graphic {
+      .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .mellowtel-logo {
+        width: 60px;
+        height: 60px;
+        transition: all 0.5s ease;
+        filter: drop-shadow(0 4px 8px rgba(43, 90, 255, 0.2));
+      }
+
+      .mellowtel-logo.inactive {
+        filter: grayscale(100%) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        opacity: 0.5;
+      }
+
+      .support-graphic {
         width: 200px;
-        height: 50px;
-        background: linear-gradient(to right, #8bc34a 50%, #a5d6a7 50%);
-        border-radius: 25px 25px 0 0;
+        height: 60px;
+        background: linear-gradient(135deg, #A1BAED 0%, #2B5AFF 100%);
+        border-radius: 30px;
         position: relative;
         overflow: hidden;
         transition: all 0.5s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px 0;
       }
 
-      .plant-graphic.inactive {
-        background: linear-gradient(to right, #bdbdbd 50%, #e0e0e0 50%);
+      .support-graphic.inactive {
+        background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%);
       }
 
-      .soil {
+      .support-graphic::before {
+        content: '';
         position: absolute;
         width: 100%;
-        height: 18px;
-        background-color: #795548;
-        bottom: 0;
-        border-radius: 0 0 10px 10px;
+        height: 100%;
+        background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      .support-graphic.inactive::before {
+        display: none;
+      }
+
+      .support-text {
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        z-index: 1;
+        position: relative;
       }
 
       .message {
-        color: #388e3c;
-        font-size: 20px;
-        margin-top: 25px;
+        color: #2B5AFF;
+        font-size: 18px;
+        margin-top: 20px;
         text-align: center;
         font-weight: 500;
         transition: color 0.3s ease;
@@ -116,6 +157,14 @@
         color: #757575;
       }
 
+      .submessage {
+        color: #6B7280;
+        font-size: 14px;
+        margin-top: 8px;
+        text-align: center;
+        line-height: 1.4;
+      }
+
       .toggle-container {
         display: flex;
         align-items: center;
@@ -123,9 +172,10 @@
       }
 
       .toggle-label {
-        color: #388e3c;
+        color: #2B5AFF;
         font-size: 18px;
         transition: color 0.3s ease;
+        font-weight: 500;
       }
 
       .toggle-label.inactive {
@@ -155,6 +205,7 @@
         bottom: 0;
         background-color: #ccc;
         transition: 0.4s;
+        border-radius: 34px;
       }
 
       .slider:before {
@@ -166,48 +217,62 @@
         bottom: 4px;
         background-color: white;
         transition: 0.4s;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
       }
 
       input:checked + .slider {
-        background-color: #4caf50;
+        background: linear-gradient(135deg, #A1BAED 0%, #2B5AFF 100%);
       }
 
       input:focus + .slider {
-        box-shadow: 0 0 1px #4caf50;
+        box-shadow: 0 0 8px rgba(43, 90, 255, 0.3);
       }
 
       input:checked + .slider:before {
         transform: translateX(26px);
       }
 
-      .slider.round {
-        border-radius: 34px;
-      }
-
-      .slider.round:before {
-        border-radius: 50%;
-      }
-
       .settings-link {
-        color: #4caf50;
+        color: #2B5AFF;
         text-decoration: none;
         font-size: 16px;
         margin-top: 20px;
         margin-bottom: 10px;
         display: inline-block;
         transition: all 0.3s ease;
+        font-weight: 500;
       }
 
       .settings-link:hover {
         text-decoration: underline;
-        color: #2d5d34;
+        color: #1E40AF;
+        transform: translateY(-1px);
       }
 
-      /* Add some floating particles in the background */
+      /* Floating particles in the background */
       .bg-particle {
         position: absolute;
-        background-color: rgba(76, 175, 80, 0.1);
+        background: radial-gradient(circle, rgba(43, 90, 255, 0.1) 0%, transparent 70%);
         border-radius: 50%;
+        animation: drift 20s infinite linear;
+      }
+
+      @keyframes drift {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
       }
     </style>
   </head>
@@ -216,33 +281,54 @@
       <!-- Particles will be added by JavaScript -->
     </div>
 
-    <div class="header">
-      <div class="title">Ambient Support</div>
-    </div>
-
     <div class="content">
-      <div class="planting-container" id="plantingContainer">
-        <div class="plant-graphic" id="plantGraphic">
-          <div class="soil"></div>
+      <div class="support-container" id="supportContainer">
+        <div class="logo-container">
+          <svg class="mellowtel-logo" id="mellowtelLogo" viewBox="0 0 69 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_i_7623_5)">
+              <rect width="68.9999" height="68.9999" rx="13.8" fill="url(#paint0_linear_7623_5)"/>
+              <path d="M21.2302 24.0489H20.6998V31.2387H31.1302C32.1025 31.2387 32.4561 32.3505 31.5721 32.7211L29.5391 33.5364C26.7989 34.6482 24.0588 35.2412 21.2302 35.2412H20.6998V42.4309H30.865C31.8373 42.4309 32.1909 43.5427 31.307 43.9133L29.1855 44.7287C26.6222 45.7664 23.882 46.2852 21.2302 46.2852H20.6998V53.4749H30.865L32.0141 52.289C36.9641 47.4711 42.7096 44.951 48.7203 44.951H49.1623V37.7613H38.9971C38.0248 37.7613 37.6712 36.6495 38.5552 36.2789L40.6766 35.4635C43.24 34.4259 45.9802 33.907 48.6319 33.907H49.0739V26.7173H38.7319C37.7596 26.7173 37.4061 25.6055 38.29 25.2349L40.323 24.4195C43.0632 23.3077 45.8034 22.7147 48.6319 22.7147H49.0739V15.525H38.9087L37.7596 16.7109C32.9864 21.5288 27.1525 24.0489 21.2302 24.0489Z" fill="white"/>
+            </g>
+            <defs>
+              <filter id="filter0_i_7623_5" x="0" y="0" width="75.8999" height="75.8999" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset dx="6.89999" dy="6.89999"/>
+                <feGaussianBlur stdDeviation="3.44999"/>
+                <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
+                <feBlend mode="normal" in2="shape" result="effect1_innerShadow_7623_5"/>
+              </filter>
+              <linearGradient id="paint0_linear_7623_5" x1="34.4999" y1="0" x2="34.4999" y2="68.9999" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#A1BAED"/>
+                <stop offset="1" stop-color="#2B5AFF"/>
+              </linearGradient>
+            </defs>
+          </svg>
         </div>
+        
+        <div class="support-graphic" id="plantGraphic">
+          <span class="support-text">Supporting developers</span>
+        </div>
+        
         <div class="message" id="supportMessage">Thanks for your support</div>
+        <div class="submessage">Your unused bandwidth helps fund the tools you love. Your data is safe. We don't collect, share, or sell personal information (not even anonymized data)</div>
       </div>
 
       <div class="toggle-container">
         <label class="switch">
           <input type="checkbox" id="supportDeveloperToggle" checked />
-          <span class="slider round"></span>
+          <span class="slider"></span>
         </label>
-        <span class="toggle-label" id="toggleLabel"
-          >Enable Ambient Support</span
-        >
+        <span class="toggle-label" id="toggleLabel">Enable Support with Mellowtel</span>
       </div>
 
-      <a href="#" id="mellowtelOptOutSettings" class="settings-link"
-        >Manage Ambient Support Settings</a
-      >
+      <a href="#" id="mellowtelOptOutSettings" class="settings-link">
+        Manage Support Settings
+      </a>
     </div>
 
-    <script src="popup.js"></script>
+    <script src="/popup.js"></script>
   </body>
 </html>
