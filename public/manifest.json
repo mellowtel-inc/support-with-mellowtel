@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Support with Mellowtel",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Support your favorite plugin with Mellowtel",
   "action": {
     "default_popup": "popup.html"
