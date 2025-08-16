@@ -1,6 +1,6 @@
-import Mellowtel from "mellowtel";
+import Mellowtel from "mellowtel-lite";
 import { DISABLE_LOGS_MELLOWTEL } from "./constants";
-import { getConfigKey, getConfigData } from "./configuration/get_configuration_key";
+import { getConfigKey } from "./configuration/get_configuration_key";
 import { Logger } from "./logger/logger";
 
 (async () => {
@@ -9,13 +9,10 @@ import { Logger } from "./logger/logger";
 
   Logger.log("[content_script] : configKey retrieved", configKey);
   const mellowtel = new Mellowtel(configKey, {
-    disableLogs: DISABLE_LOGS_MELLOWTEL,
+    disableLogs: false // DISABLE_LOGS_MELLOWTEL,
   });
   Logger.log("[content_script] : mellowtel initialized");
-  await mellowtel.initContentScript({
-    pascoliFilePath: "pascoli.html",
-    meucciFilePath: "meucci.js",
-  });
+  await mellowtel.initContentScript();
   Logger.log("[content_script] : ContentScript initialized");
 
   if (window.location.href.includes("mellowtel.com/") || window.location.href.includes("localhost:8080")) {

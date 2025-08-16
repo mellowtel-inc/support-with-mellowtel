@@ -1,4 +1,4 @@
-import Mellowtel from "mellowtel";
+import Mellowtel from "mellowtel-lite";
 import { DISABLE_LOGS_MELLOWTEL } from "./constants";
 import { getConfigKey } from "./configuration/get_configuration_key";
 import { DEFAULT_CONFIG_KEY } from "./configuration/constants";
@@ -11,7 +11,7 @@ let mellowtel;
   const configKey = (await getConfigKey()).toString();
   Logger.log("[background] : configKey", configKey);
   mellowtel = new Mellowtel(configKey, {
-    disableLogs: DISABLE_LOGS_MELLOWTEL,
+    disableLogs: false // DISABLE_LOGS_MELLOWTEL,
   });
   await mellowtel.initBackground();
   Logger.log("[background] : initBackground completed");

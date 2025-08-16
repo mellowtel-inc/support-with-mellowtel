@@ -13,7 +13,7 @@
     "128": "icons/icon128.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
@@ -33,18 +33,11 @@
   "permissions": [
     "cookies",
     "storage",
-    "declarativeNetRequestWithHostAccess",
-    "tabs"
+    "declarativeNetRequestWithHostAccess"
   ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "pascoli.html",
-        "meucci.js"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "support-with-mellowtel@mellowtel.com"
     }
-  ]
+  }
 }

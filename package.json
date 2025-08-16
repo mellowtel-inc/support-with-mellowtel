@@ -15,9 +15,7 @@
   },
   "private": true,
   "dependencies": {
-    "@mellowtel/module-meucci": "^1.0.0",
-    "@mellowtel/module-pascoli": "^1.0.0",
-    "mellowtel": "^1.6.3"
+    "mellowtel-lite": "^0.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",

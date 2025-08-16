@@ -8,8 +8,6 @@ module.exports = {
     background: path.join(__dirname, "src", "background.js"), // Background script
     popup: path.join(__dirname, "src", "popup.js"), // Popup script
     content_script: path.join(__dirname, "src", "content_script.js"), // Content script
-    pascoli: path.join(__dirname, "src", "pascoli.js"), // Pascoli script
-    meucci: path.join(__dirname, "src", "meucci.js"), // Meucci script
   },
   output: {
     path: path.join(__dirname, "dist"),

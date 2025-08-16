@@ -1,4 +1,4 @@
-# Support with Mellowtel | Mellowtel
+# Support with Mellowtel [Firefox version]
 
 Support your favorite browser plugin developer with Mellowtel's extension.
 

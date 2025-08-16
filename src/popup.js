@@ -1,4 +1,4 @@
-import Mellowtel from "mellowtel";
+import Mellowtel from "mellowtel-lite";
 import { DISABLE_LOGS_MELLOWTEL } from "./constants";
 import { getConfigKey, getConfigData } from "./configuration/get_configuration_key";
 import { Logger } from "./logger/logger";
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Logger.log("[popup] : isUsingDefaultKey", isUsingDefaultKey);
 
   const mellowtel = new Mellowtel(configKey, {
-    disableLogs: DISABLE_LOGS_MELLOWTEL,
+    disableLogs: false // DISABLE_LOGS_MELLOWTEL,
   });
 
   // Get DOM elements
