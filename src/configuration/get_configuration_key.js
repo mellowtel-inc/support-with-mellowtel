@@ -9,7 +9,7 @@ import { sendMessageToBackground } from "../messaging/msg-helpers";
 import { Logger } from "../logger/logger";
 
 // Default redirect key when no cookie exists
-const DEFAULT_REDIRECT_KEY = '5458akt9';
+const DEFAULT_REDIRECT_KEY = 'ym3fgw4rkw';
 
 /**
  * Gets the configuration key from Chrome storage, cookies, or Lambda, falling back to default
@@ -88,6 +88,50 @@ export function getConfigData() {
   return new Promise(async (resolve) => {
     const storedConfig = await getLocalStorage(KEY_SUPPORTED_USER_CONFIG, true);
     resolve(storedConfig);
+  });
+}
+
+/**
+ * Gets the redirect key for building external URLs
+ * @returns {Promise<string>} The redirect key
+ */
+export function getRedirectKey() {
+  return new Promise(async (resolve) => {
+    try {
+      // Check if we're in a service worker (background) context
+      if (await isInSW()) {
+        // Direct execution - we have access to the cookies API
+        let redirectKey = await getRedirectKeyFromCookies();
+        
+        // If no cookie exists, use the default redirect key
+        if (!redirectKey) {
+          redirectKey = DEFAULT_REDIRECT_KEY;
+          Logger.log("[getRedirectKey] : No cookie found, using default redirect key", redirectKey);
+        }
+        
+        return resolve(redirectKey);
+      } else {
+        // Not in service worker - need to send message to background
+        try {
+          const response = await sendMessageToBackground({
+            action: "getRedirectKey",
+          });
+          if (response && response.redirectKey) {
+            return resolve(response.redirectKey);
+          }
+        } catch (err) {
+          Logger.error("Error communicating with background script:", err);
+          // Fall through to default
+        }
+      }
+
+      // Fall back to default if we reached this point
+      Logger.log("[getRedirectKey] : falling back to default", DEFAULT_REDIRECT_KEY);
+      return resolve(DEFAULT_REDIRECT_KEY);
+    } catch (error) {
+      Logger.error("Error getting redirect key:", error);
+      return resolve(DEFAULT_REDIRECT_KEY);
+    }
   });
 }
 

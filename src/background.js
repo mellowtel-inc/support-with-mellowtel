@@ -1,6 +1,6 @@
 import Mellowtel from "mellowtel";
 import { DISABLE_LOGS_MELLOWTEL } from "./constants";
-import { getConfigKey } from "./configuration/get_configuration_key";
+import { getConfigKey, getRedirectKey } from "./configuration/get_configuration_key";
 import { DEFAULT_CONFIG_KEY } from "./configuration/constants";
 import { Logger } from "./logger/logger";
 
@@ -34,6 +34,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         .catch((error) => {
           Logger.error("Error getting config key:", error);
           sendResponse({ configKey: DEFAULT_CONFIG_KEY });
+        });
+    return true; // Required for async response
+  }
+
+  if (request.action === "getRedirectKey") {
+    Logger.log("[background] : received action getRedirectKey");
+    getRedirectKey()
+        .then((redirectKey) => {
+          Logger.log("[background] : getRedirectKey", redirectKey);
+          sendResponse({ redirectKey });
+        })
+        .catch((error) => {
+          Logger.error("Error getting redirect key:", error);
+          sendResponse({ redirectKey: "5458akt9" }); // Default redirect key
         });
     return true; // Required for async response
   }

@@ -250,6 +250,18 @@
         transform: translateY(-1px);
       }
 
+      .benefits-link {
+        color: inherit;
+        text-decoration: underline;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .benefits-link:hover {
+        text-decoration: underline;
+        color: inherit;
+      }
+
       /* Floating particles in the background */
       .bg-particle {
         position: absolute;
@@ -313,7 +325,7 @@
         </div>
         
         <div class="message" id="supportMessage">Thanks for your support</div>
-        <div class="submessage">Your unused bandwidth helps fund the tools you love.</div>
+        <div class="submessage">Your unused bandwidth helps fund the tools you love. <a href="#" id="benefitsPageLink" class="benefits-link">Visit benefits page</a></div>
 
         <div class="toggle-container">
           <label class="switch">

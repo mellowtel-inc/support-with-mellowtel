@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Support with Mellowtel",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Support your favorite plugin with Mellowtel",
   "action": {
     "default_popup": "popup.html"
@@ -25,6 +25,11 @@
       ],
       "run_at": "document_start",
       "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_website.js"],
+      "run_at": "document_idle"
     }
   ],
   "host_permissions": [

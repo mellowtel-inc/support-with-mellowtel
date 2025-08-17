@@ -1,6 +1,6 @@
 import Mellowtel from "mellowtel";
 import { DISABLE_LOGS_MELLOWTEL } from "./constants";
-import { getConfigKey, getConfigData } from "./configuration/get_configuration_key";
+import { getConfigKey, getConfigData, getRedirectKey } from "./configuration/get_configuration_key";
 import { Logger } from "./logger/logger";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -49,6 +49,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         "&supported_name=" +
         encodeURIComponent(variableName);
       window.open(settingsLink, "_blank");
+    });
+
+  // Setup benefits page link event
+  document
+    .getElementById("benefitsPageLink")
+    .addEventListener("click", async () => {
+      const redirectKey = await getRedirectKey();
+      const benefitsUrl = `https://www.mellowtel.com/developer/${redirectKey}`;
+      window.open(benefitsUrl, "_blank");
     });
 
   // Add event listener for toggle changes
